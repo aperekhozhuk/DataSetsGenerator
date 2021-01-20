@@ -1,0 +1,11 @@
+<script>
+    var new_schema_form_parameters = {{new_schema_form_parameters | safe}}
+</script>
+
+
+<form id="newSchemaForm" method="post">
+    {% csrf_token %}
+</form>
+
+{% load static %}
+<script type="text/javascript" src="{% get_static_prefix %}datasets/js/new_schema.js"></script>
