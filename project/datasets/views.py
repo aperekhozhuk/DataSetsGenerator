@@ -1,4 +1,5 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse,\
+    HttpResponseRedirect, get_object_or_404
 from . import datatypes
 from . import schemas
 from .models import Schema, SchemaColumn
@@ -56,3 +57,19 @@ def schemas_list(request):
             'user_schemas' : data,
         }
     )
+
+def generate_data(request):
+    user = request.user
+    if not user.is_authenticated:
+        return HttpResponseRedirect('/login')
+    if request.method != 'POST':
+        return HttpResponseRedirect('/')
+    form = request.POST
+    schema_id = form['schema_id']
+    records_number = form['records_number']
+    schema = get_object_or_404(Schema, pk = schema_id)
+    # If requested schema doesn't belong to authenticated user -
+    # we need to block such request
+    if schema.user.id != user.id:
+        return HttpResponse(status = 403)
+    return HttpResponseRedirect('/')
