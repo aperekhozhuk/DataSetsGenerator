@@ -2,10 +2,39 @@ function CreateNewSchemaForm() {
     let form = document.getElementById('newSchemaForm');
     let i = 0;
 
+    const schema_field_name = "schema_name"
+    let schema_name_element_label = document.createElement("label");
+    schema_name_element_label.setAttribute("for", schema_field_name);
+    schema_name_element_label.innerHTML = "Schema name";
+
+    let schema_name_element = document.createElement("input");
+    schema_name_element.setAttribute("type", "text");
+    schema_name_element.setAttribute("required", "required");
+    schema_name_element.setAttribute("name", schema_field_name);
+
+    form.appendChild(schema_name_element_label);
+    form.appendChild(schema_name_element);
+
     for (let [key1, value1] of Object.entries(new_schema_form_parameters)) {
         i++;
         // Creating fieldset element that holds column settings
         let fieldset_element = document.createElement("fieldset")
+        // Creating order field
+        let order_element_name = `column_${i}_order`;
+        // Label
+        let order_element_label = document.createElement("label");
+        order_element_label.setAttribute("for", order_element_name);
+        order_element_label.innerHTML = "Order:";
+        // Input
+        let order_element = document.createElement("input");
+        order_element.setAttribute("name", order_element_name);
+        order_element.setAttribute("type", "number");
+        order_element.setAttribute("step", 1.0);
+        order_element.setAttribute("required", "required");
+        order_element.setAttribute("value", i);
+        // Add to fieldset
+        fieldset_element.appendChild(order_element_label);
+        fieldset_element.appendChild(order_element);
         // Creating input field for columnt name
         // Creating Label
         let input_element_name = `column_${i}_name`;

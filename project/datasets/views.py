@@ -8,10 +8,12 @@ def index(request):
                   context={'username': request.user.username})
 
 def new_schema(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login')
     if request.method == 'POST':
         data = request.POST
+        schema_name = data['schema_name']
         columns = schemas.get_columns_info_from_schema_form(data)
-        print(columns)
         return HttpResponseRedirect('/')
 
 

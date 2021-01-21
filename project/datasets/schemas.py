@@ -22,6 +22,7 @@ def get_columns_info_from_columns(columns):
     columns_info = []
     for column in columns.values():
         name = column['name']
+        order = int(column['order'])
         datatype = column['type']
         datatype_class = datatypes.DATATYPES[datatype]
         params = []
@@ -31,5 +32,5 @@ def get_columns_info_from_columns(columns):
             else:
                 return None
         datatype = ','.join([datatype] + params)
-        columns_info.append((name, datatype))
+        columns_info.append((name, order, datatype))
     return columns_info
