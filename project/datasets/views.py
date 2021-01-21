@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponse,\
 from . import datatypes
 from . import schemas
 from .models import Schema, SchemaColumn
+from . import tasks
 
 
 def index(request):
@@ -72,4 +73,6 @@ def generate_data(request):
     # we need to block such request
     if schema.user.id != user.id:
         return HttpResponse(status = 403)
+    # Finally, creating task
+    tasks.create_task(schema, records_number)
     return HttpResponseRedirect('/')

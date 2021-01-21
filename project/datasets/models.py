@@ -14,3 +14,10 @@ class SchemaColumn(models.Model):
     datatype = models.CharField(max_length = 50)
     order = models.IntegerField()
     schema = models.ForeignKey(Schema, related_name='columns', on_delete=models.CASCADE)
+
+
+class Task(models.Model):
+
+    schema = models.ForeignKey(Schema, related_name='tasks', on_delete=models.CASCADE)
+    records_number = models.IntegerField()
+    finished = models.BooleanField(default=False)
