@@ -15,7 +15,7 @@ class FakeData:
         'type' : 'date',
         'value' : '2010-01-01',
     }
-    html_input_parameters = []
+    html_input_parameters = {}
 
 
 class DataInteger(FakeData):

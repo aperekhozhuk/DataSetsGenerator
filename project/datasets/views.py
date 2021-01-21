@@ -67,7 +67,7 @@ def generate_data(request):
         return HttpResponseRedirect('/')
     form = request.POST
     schema_id = form['schema_id']
-    records_number = form['records_number']
+    records_number = int(form['records_number'])
     schema = get_object_or_404(Schema, pk = schema_id)
     # If requested schema doesn't belong to authenticated user -
     # we need to block such request
