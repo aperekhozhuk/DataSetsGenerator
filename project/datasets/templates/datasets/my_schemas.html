@@ -1,0 +1,18 @@
+Schemas List
+
+{% for user_schema in user_schemas %}
+    <div>
+        <p>{{user_schema.schema.name}}</p>
+        <ul>
+            {% for column in user_schema.columns %}
+                <li>{{column.name}} | {{column.datatype}}</li>
+            {% endfor %}
+        </ul>
+        <form action="/generate_data/" method="post">
+            {% csrf_token %}
+            <label for="records_number">Number of records:</label>
+            <input type="number" name="records_number" step="1.0" required="required">
+            <input type="submit" value="Generate data">
+        </form>
+    </div>
+{% endfor %}

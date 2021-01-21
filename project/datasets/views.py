@@ -36,3 +36,23 @@ def new_schema(request):
             'new_schema_form_parameters' : new_schema_form_parameters,
         }
     )
+
+def schemas_list(request):
+    user = request.user
+    if not user.is_authenticated:
+        return HttpResponseRedirect('/login')
+    user_schemas = user.schemas.all()
+    data = [
+        {
+            'schema' : user_schema,
+            'columns' : user_schema.columns.all()
+        } for user_schema in user_schemas
+    ]
+
+    return render(
+        request,
+        'datasets/my_schemas.html',
+        context = {
+            'user_schemas' : data,
+        }
+    )
