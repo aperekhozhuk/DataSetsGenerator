@@ -76,3 +76,32 @@ def generate_data(request):
     # Finally, creating task
     tasks.create_task(schema, records_number)
     return HttpResponseRedirect('/')
+
+def tasks_list(request):
+    user = request.user
+    if not user.is_authenticated:
+        return HttpResponseRedirect('/login')
+    user_schemas = user.schemas.all()
+    schemas_data = []
+    for schema in user_schemas:
+        name = schema.name
+        tasks = list(schema.tasks.all())
+        tasks_info = [
+            {
+                'id' : task.id,
+                'records_number' : task.records_number,
+                'finished' : task.finished,
+            } for task in tasks
+        ]
+        schemas_data.append({
+            'name' : name,
+            'tasks' : tasks_info,
+        })
+
+    return render(
+        request,
+        'datasets/tasks_list.html',
+        context = {
+            'schemas_data' : schemas_data,
+        }
+    )

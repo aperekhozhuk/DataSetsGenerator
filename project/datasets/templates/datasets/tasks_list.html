@@ -1,0 +1,16 @@
+{% for schema_data in schemas_data %}
+    <div>
+        {% for task in schema_data.tasks %}
+            <p>
+                Task id: {{task.id}} |
+                Records : {{task.records_number}} |
+                Schema: {{schema_data.name}} |
+                Finished: {{task.finished}}
+                {% if task.finished %}
+                    <a href="/documents/{{task.id}}.csv" target="_blank">Download</a>
+                {% endif %}
+            </p>
+            <hr>
+        {% endfor %}
+    </div>
+{% endfor %}

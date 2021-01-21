@@ -1,3 +1,4 @@
+from django.conf import settings
 from .models import Task
 from . import datatypes
 import csv
@@ -28,7 +29,7 @@ def run_task(task):
     task.save()
 
 def generate_csv(file_id, data_generators, records_number):
-    f = open(f'media/{file_id}.csv', 'w', newline='')
+    f = open(f'{settings.MEDIA_ROOT}/{file_id}.csv', 'w', newline='')
     writer = csv.writer(f)
     for i in range(records_number):
         row = [data_generator.get_value() for data_generator in data_generators]
