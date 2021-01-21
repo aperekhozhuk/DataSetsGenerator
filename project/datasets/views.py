@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from . import datatypes
+from . import schemas
 
 
 def index(request):
@@ -8,7 +9,9 @@ def index(request):
 
 def new_schema(request):
     if request.method == 'POST':
-        print(request.POST)
+        data = request.POST
+        columns = schemas.get_columns_info_from_schema_form(data)
+        print(columns)
         return HttpResponseRedirect('/')
 
 
