@@ -24,13 +24,15 @@ def run_task(task):
             if parameters_type == 'number':
                 parameters = [int(p) for p in parameters]
         data_generators.append(datatype_class(*parameters))
-    generate_csv(task.id, data_generators, records_number)
+    headers = [column.name for column in columns]
+    generate_csv(task.id, headers, data_generators, records_number)
     task.finished = True
     task.save()
 
-def generate_csv(file_id, data_generators, records_number):
+def generate_csv(file_id, headers, data_generators, records_number):
     f = open(f'{settings.MEDIA_ROOT}/{file_id}.csv', 'w', newline='')
     writer = csv.writer(f)
+    writer.writerow(headers)
     for i in range(records_number):
         row = [data_generator.get_value() for data_generator in data_generators]
         writer.writerow(row)
