@@ -3,22 +3,26 @@ function CreateNewSchemaForm() {
     let i = 0;
 
     const schema_field_name = "schema_name"
+    let schema_name_fieldset = document.createElement("fieldset");
+
     let schema_name_element_label = document.createElement("label");
     schema_name_element_label.setAttribute("for", schema_field_name);
-    schema_name_element_label.innerHTML = "Schema name";
+    schema_name_element_label.innerHTML = "Schema name:";
 
     let schema_name_element = document.createElement("input");
     schema_name_element.setAttribute("type", "text");
     schema_name_element.setAttribute("required", "required");
     schema_name_element.setAttribute("name", schema_field_name);
 
-    form.appendChild(schema_name_element_label);
-    form.appendChild(schema_name_element);
+    schema_name_fieldset.appendChild(schema_name_element_label);
+    schema_name_fieldset.appendChild(schema_name_element);
+    form.appendChild(schema_name_fieldset);
 
     for (let [key1, value1] of Object.entries(new_schema_form_parameters)) {
         i++;
         // Creating fieldset element that holds column settings
         let fieldset_element = document.createElement("fieldset")
+        fieldset_element.setAttribute("class", "border p-2")
         // Creating order field
         let order_element_name = `column_${i}_order`;
         // Label
@@ -76,6 +80,7 @@ function CreateNewSchemaForm() {
         // If element's type supports some parameters
         if (value1) {
             for (let [key2, value2] of Object.entries(value1)) {
+                let parameters_container = document.createElement("div")
                 // Creating label
                 let parameter_element_name = `column_${i}_${key2}`;
                 let parameter_element_label = document.createElement("label");
@@ -89,9 +94,10 @@ function CreateNewSchemaForm() {
                 for (let [key3, value3] of Object.entries(value2)) {
                     parameter_element.setAttribute(key3, value3);
                 }
-                // Adding to fieldset
-                fieldset_element.appendChild(parameter_element_label);
-                fieldset_element.appendChild(parameter_element);
+                // Adding parameters to container
+                parameters_container.appendChild(parameter_element_label);
+                parameters_container.appendChild(parameter_element);
+                fieldset_element.appendChild(parameters_container)
             }
         }
         fieldset_element.appendChild(document.createElement("br"));

@@ -6,27 +6,29 @@
 
     {% include "datasets/navbar.html" with username=username %}
 
-    <h1>Tasks List</h1>
+    <div class="p-3">
+        <h1 class="text-success">Tasks List</h1>
 
-    {% if not tasks_exist %}
-        <p>You have not generated any datasets yet </p>
-    {% endif %}
+        {% if not tasks_exist %}
+            <p>You have not generated any datasets yet </p>
+        {% endif %}
 
-    {% for schema_data in schemas_data %}
-        <div>
-            {% for task in schema_data.tasks %}
-                <p>
-                    Task id: {{task.id}} |
-                    Records : {{task.records_number}} |
-                    Schema: {{schema_data.name}} |
-                    Finished: {{task.finished}}
-                    {% if task.finished %}
-                        <a href="/documents/{{task.id}}.csv" target="_blank">Download</a>
-                    {% endif %}
-                </p>
-                <hr>
-            {% endfor %}
-        </div>
-    {% endfor %}
-
+        <hr>
+        {% for schema_data in schemas_data %}
+            <div>
+                {% for task in schema_data.tasks %}
+                    <p class="p-3">
+                        <b>Task id : </b>{{task.id}} |
+                        <b>Records : </b>{{task.records_number}} |
+                        <b>Schema : </b>Schema: {{schema_data.name}} |
+                        <b>Finished : </b>{{task.finished}}
+                        {% if task.finished %}
+                            <a href="/documents/{{task.id}}.csv" target="_blank">Download</a>
+                        {% endif %}
+                    </p>
+                    <hr>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

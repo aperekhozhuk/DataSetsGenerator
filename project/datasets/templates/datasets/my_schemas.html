@@ -13,8 +13,8 @@
     {% endif %}
 
     {% for user_schema in user_schemas %}
-        <div>
-            <p>{{user_schema.schema.name}}</p>
+        <div class="p-3">
+            <p>Schema name : <b>{{user_schema.schema.name}}</b></p>
             <ul>
                 {% for column in user_schema.columns %}
                     <li>{{column.name}} | {{column.datatype}}</li>
@@ -28,5 +28,6 @@
                 <input type="submit" value="Generate data">
             </form>
         </div>
+        <hr>
     {% endfor %}
 {% endblock %}
