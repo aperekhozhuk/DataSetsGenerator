@@ -1,0 +1,10 @@
+<nav>
+    {% if username %}
+        <p>Hello, {{username}} | <a href="/logout">Logout</a></p>
+        <a href="/my_schemas">My schemas</a>
+        <a href="/my_tasks">My tasks</a>
+        <a href="/new_schema">Create new schema</a>
+    {% else %}
+        <p>Welcome! Please, <a href="/login">Log in</a></p>
+    {% endif %}
+</nav>

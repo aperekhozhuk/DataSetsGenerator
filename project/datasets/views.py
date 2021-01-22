@@ -11,7 +11,8 @@ def index(request):
                   context={'username': request.user.username})
 
 def new_schema(request):
-    if not request.user.is_authenticated:
+    user = request.user
+    if not user.is_authenticated:
         return HttpResponseRedirect('/login')
     if request.method == 'POST':
         data = request.POST
@@ -36,6 +37,7 @@ def new_schema(request):
         'datasets/new_schema.html',
         context = {
             'new_schema_form_parameters' : new_schema_form_parameters,
+            'username': user.username,
         }
     )
 
@@ -56,6 +58,7 @@ def schemas_list(request):
         'datasets/my_schemas.html',
         context = {
             'user_schemas' : data,
+            'username': user.username,
         }
     )
 
@@ -83,9 +86,12 @@ def tasks_list(request):
         return HttpResponseRedirect('/login')
     user_schemas = user.schemas.all()
     schemas_data = []
+    tasks_exist = False
     for schema in user_schemas:
         name = schema.name
         tasks = list(schema.tasks.all())
+        if tasks:
+            tasks_exist = True
         tasks_info = [
             {
                 'id' : task.id,
@@ -103,5 +109,7 @@ def tasks_list(request):
         'datasets/tasks_list.html',
         context = {
             'schemas_data' : schemas_data,
+            'tasks_exist' : tasks_exist,
+            'username': user.username,
         }
     )

@@ -1,19 +1,32 @@
-Schemas List
+{% extends "datasets/base.html" %}
 
-{% for user_schema in user_schemas %}
-    <div>
-        <p>{{user_schema.schema.name}}</p>
-        <ul>
-            {% for column in user_schema.columns %}
-                <li>{{column.name}} | {{column.datatype}}</li>
-            {% endfor %}
-        </ul>
-        <form action="/generate_data/" method="post">
-            {% csrf_token %}
-            <label for="records_number">Number of records:</label>
-            <input type="hidden" name="schema_id" value="{{user_schema.schema.id}}">
-            <input type="number" name="records_number" step="1.0" required="required">
-            <input type="submit" value="Generate data">
-        </form>
-    </div>
-{% endfor %}
+{% block title %}My schemas{% endblock %}
+
+{% block content %}
+
+    {% include "datasets/navbar.html" with username=username %}
+
+    <h1>Schemas List</h1>
+
+    {% if not user_schemas %}
+        <p>You have not created any schema yet</p>
+    {% endif %}
+
+    {% for user_schema in user_schemas %}
+        <div>
+            <p>{{user_schema.schema.name}}</p>
+            <ul>
+                {% for column in user_schema.columns %}
+                    <li>{{column.name}} | {{column.datatype}}</li>
+                {% endfor %}
+            </ul>
+            <form action="/generate_data/" method="post">
+                {% csrf_token %}
+                <label for="records_number">Number of records:</label>
+                <input type="hidden" name="schema_id" value="{{user_schema.schema.id}}">
+                <input type="number" name="records_number" step="1.0" required="required">
+                <input type="submit" value="Generate data">
+            </form>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,11 +1,20 @@
-<script>
-    var new_schema_form_parameters = {{new_schema_form_parameters | safe}}
-</script>
+{% extends "datasets/base.html" %}
+
+{% block title %}Create new schema{% endblock %}
+
+{% block content %}
+
+    {% include "datasets/navbar.html" with username=username %}
+
+    <script>
+        var new_schema_form_parameters = {{new_schema_form_parameters | safe}}
+    </script>
 
 
-<form id="newSchemaForm" method="post">
-    {% csrf_token %}
-</form>
+    <form id="newSchemaForm" method="post">
+        {% csrf_token %}
+    </form>
 
-{% load static %}
-<script type="text/javascript" src="{% get_static_prefix %}datasets/js/new_schema.js"></script>
+    {% load static %}
+    <script type="text/javascript" src="{% get_static_prefix %}datasets/js/new_schema.js"></script>
+{% endblock %}

@@ -1,1 +1,7 @@
-{{username}}
+{% extends "datasets/base.html" %}
+
+{% block title %}Fake data generator{% endblock %}
+
+{% block content %}
+    {% include "datasets/navbar.html" with username=username %}
+{% endblock %}
